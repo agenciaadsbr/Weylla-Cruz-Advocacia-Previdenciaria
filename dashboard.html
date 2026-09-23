@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Leads — Weylla Cruz</title>
+<meta name="theme-color" content="#0A0A0A">
+<style>
+:root{
+  --bg:#0A0A0A;--card:#171717;--card2:#1F1F1F;--line:#262626;--line2:#333;
+  --text:#FAFAFA;--muted:#A3A3A3;--dim:#737373;
+  --blue:#60A5FA;--green:#4ADE80;--amber:#FBBF24;--red:#F87171;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{
+  min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);
+}
+button,input{font:inherit;color:inherit}
+.hidden{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* ---------- login ---------- */
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.login .card{width:100%;max-width:380px;padding:30px 28px}
+.login h1{font-size:15px;letter-spacing:.12em;font-weight:600;margin:0 0 4px}
+.login p{margin:0 0 24px;color:var(--muted);font-size:13px}
+label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+input[type=text],input[type=password],input[type=date]{
+  width:100%;height:40px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--bg);
+}
+input:focus{outline:none;border-color:#525252}
+.field{margin-bottom:14px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;
+  border-radius:8px;border:1px solid var(--line2);background:var(--text);color:#0A0A0A;font-weight:600;cursor:pointer;
+}
+.btn.full{width:100%;margin-top:6px}
+.btn[disabled]{opacity:.6;cursor:progress}
+.btn.ghost{background:transparent;color:var(--text);height:34px;padding:0 14px;font-size:12px;letter-spacing:.08em}
+.btn.ghost:hover{background:var(--card2)}
+.erro{color:var(--red);font-size:13px;margin:10px 0 0;min-height:18px}
+
+/* ---------- topo ---------- */
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}
+.top h1{font-size:18px;letter-spacing:.12em;font-weight:600;margin:0}
+.top .sub{color:var(--muted);margin-top:2px}
+
+/* ---------- KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:12px}
+@media (min-width:760px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{padding:16px 18px}
+.kpi small{display:block;color:var(--muted);font-size:12px}
+.kpi b{display:block;font-size:24px;font-weight:600;margin-top:4px;letter-spacing:-.01em}
+
+/* ---------- cards ---------- */
+.grid{display:grid;gap:12px}
+.grid > *{min-width:0}
+.card-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.card-h h2{font-size:14px;font-weight:600;margin:0}
+.card-b{padding:16px 18px}
+.periodo{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.periodo input{width:auto;height:32px;font-size:12px;color-scheme:dark}
+.chart-box{position:relative;height:300px}
+.legend{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* ---------- tabelas ---------- */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-weight:500;color:var(--dim);font-size:12px;padding:10px 18px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 18px;border-bottom:1px solid var(--line);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#1B1B1B}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--line2);font-size:12px;color:var(--muted)}
+.vazio{padding:28px 18px;text-align:center;color:var(--dim)}
+.wa{
+  display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:7px;
+  border:1px solid var(--line2);background:transparent;color:var(--text);text-decoration:none;font-size:12px;
+}
+.wa:hover{background:var(--card2);border-color:#404040}
+.wa svg{width:14px;height:14px;fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.carregando{color:var(--dim);font-size:12px}
+@media (max-width:640px){
+  .wrap{padding:20px 14px 48px}
+  .top h1{font-size:15px}
+  th,td{padding:10px 12px}
+  .chart-box{height:240px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Login ===== -->
+<section class="login hidden" id="tela-login">
+  <form class="card" id="form-login" autocomplete="on">
+    <h1>LEADS — WEYLLA CRUZ</h1>
+    <p>Acesso restrito ao painel.</p>
+    <div class="field">
+      <label for="usuario">Usuário</label>
+      <input id="usuario" type="text" autocomplete="username" value="Admin" required>
+    </div>
+    <div class="field">
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" autocomplete="current-password" required>
+    </div>
+    <button class="btn full" id="btn-entrar" type="submit">Entrar</button>
+    <p class="erro" id="erro-login" role="alert"></p>
+  </form>
+</section>
+
+<!-- ===== Painel ===== -->
+<main class="wrap hidden" id="tela-painel">
+  <header class="top">
+    <div>
+      <h1>LEADS — WEYLLA CRUZ</h1>
+      <div class="sub" id="subtitulo">Carregando…</div>
+    </div>
+    <button class="btn ghost" id="btn-sair" type="button">SAIR</button>
+  </header>
+
+  <div class="kpis">
+    <div class="card kpi"><small>Visitas</small><b id="k-visitas">–</b></div>
+    <div class="card kpi"><small>Leads</small><b id="k-leads">–</b></div>
+    <div class="card kpi"><small>Conversão</small><b id="k-conv">–</b></div>
+    <div class="card kpi"><small>Leads hoje</small><b id="k-hoje">–</b></div>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <div class="card-h">
+        <h2>Evolução diária</h2>
+        <div class="periodo">
+          <label for="de" style="margin:0">DE</label><input type="date" id="de">
+          <label for="ate" style="margin:0">ATÉ</label><input type="date" id="ate">
+        </div>
+      </div>
+      <div class="card-b">
+        <div class="chart-box"><canvas id="grafico" aria-label="Gráfico de visitas, cadastros e conversão por dia"></canvas></div>
+        <div class="legend">
+          <span><i style="background:var(--blue)"></i>Visitas</span>
+          <span><i style="background:var(--green)"></i>Cadastros</span>
+          <span><i style="background:var(--amber)"></i>Taxa de conversão (%)</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-h"><h2>Conversão por LP</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>LP</th><th class="num">Visitas</th><th class="num">Leads</th><th class="num">Conv.</th></tr></thead>
+          <tbody id="t-conv"><tr><td colspan="4" class="vazio">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-h"><h2>Leads</h2><span class="carregando" id="info-leads"></span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nome</th><th>WhatsApp</th><th>LP</th><th>Interesse</th><th>Origem</th><th>Data</th><th>Ação</th></tr></thead>
+          <tbody id="t-leads"><tr><td colspan="7" class="vazio">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<script>
+/* =========================================================
+   CONFIGURAÇÃO
+   ========================================================= */
+var SB_URL  = 'https://qxhnjzyhtllmtdrcyygi.supabase.co';
+var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4aG5qenlodGxsbXRkcmN5eWdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMzczNjgsImV4cCI6MjA5NzgxMzM2OH0.DWf4I_x9F--H7ZZHUt_n4V3B__Nlsf1jNZdUV0vNBLU';
+var SITE    = 'weylla-cruz';
+var USUARIOS = { admin: 'admin@weylla-cruz.adsbr.internal' };   // usuário exibido → e-mail no Supabase Auth
+var NOME_CLIENTE = 'Weylla Cruz | Advocacia Previdenciária';
+var TZ = 'America/Sao_Paulo';
+
+var LPS = { '/': 'Página principal', '/?s=maternidade': 'Salário-maternidade', '/?s=bpc': 'BPC/LOAS' };
+var INTERESSE = { geral: 'Geral', maternidade: 'Salário-maternidade', bpc: 'BPC/LOAS', outros: 'Outros benefícios' };
+
+var sb = window.supabase.createClient(SB_URL, SB_ANON);
+var $ = function (id) { return document.getElementById(id); };
+var grafico = null;
+
+/* ---------- utilidades ---------- */
+function diaISO(d) {   // yyyy-mm-dd no fuso de Brasília
+  return new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
+}
+function dataHora(iso) {
+  return new Intl.DateTimeFormat('pt-BR', { timeZone: TZ, day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(iso));
+}
+function diaCurto(ymd) { var p = ymd.split('-'); return p[2] + '/' + p[1]; }
+function pct(a, b) { return b ? (a / b * 100) : 0; }
+function fmtPct(v) { return v.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'; }
+function fmtNum(v) { return v.toLocaleString('pt-BR'); }
+function soDigitos(t) { return String(t || '').replace(/\D/g, ''); }
+function fmtTel(t) {
+  var d = soDigitos(t);
+  if (d.length === 13 && d.indexOf('55') === 0) d = d.slice(2);
+  if (d.length === 11) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
+  if (d.length === 10) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6);
+  return t || '';
+}
+function linkWhats(nome, tel) {
+  var d = soDigitos(tel);
+  if (d.length === 10 || d.length === 11) d = '55' + d;
+  var primeiro = String(nome || '').trim().split(/\s+/)[0] || '';
+  var msg = 'Olá, ' + primeiro + '. Recebemos seu contato através da ' + NOME_CLIENTE + ' e gostaria de dar continuidade ao seu atendimento.';
+  return 'https://wa.me/' + d + '?text=' + encodeURIComponent(msg);
+}
+function el(tag, attrs, texto) {   // cria elemento com texto seguro (nada de innerHTML com dado do lead)
+  var e = document.createElement(tag);
+  if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]);
+  if (texto != null) e.textContent = texto;
+  return e;
+}
+function linhaVazia(tbody, cols, msg) {
+  tbody.innerHTML = '';
+  var tr = el('tr'); var td = el('td', { colspan: cols, class: 'vazio' }, msg); tr.appendChild(td); tbody.appendChild(tr);
+}
+
+/* ---------- busca paginada (Supabase devolve no máx. 1000 por vez) ---------- */
+async function buscarTudo(tabela, colunas, desdeISO, ateISO) {
+  var todos = [], passo = 1000, i = 0;
+  while (true) {
+    var r = await sb.from(tabela).select(colunas)
+      .eq('site', SITE).gte('created_at', desdeISO).lt('created_at', ateISO)
+      .order('created_at', { ascending: false }).range(i, i + passo - 1);
+    if (r.error) throw r.error;
+    todos = todos.concat(r.data || []);
+    if (!r.data || r.data.length < passo) break;
+    i += passo;
+    if (i > 50000) break;
+  }
+  return todos;
+}
+
+/* ---------- período ---------- */
+function periodoPadrao() {
+  var hoje = new Date();
+  var ini = new Date(hoje.getTime() - 29 * 86400000);
+  $('de').value = diaISO(ini);
+  $('ate').value = diaISO(hoje);
+}
+function limitesPeriodo() {
+  // meia-noite de Brasília (UTC-3) do dia inicial até a meia-noite do dia seguinte ao final
+  var de = new Date($('de').value + 'T00:00:00-03:00');
+  var ate = new Date(new Date($('ate').value + 'T00:00:00-03:00').getTime() + 86400000);
+  return { de: de, ate: ate };
+}
+function diasEntre(deYMD, ateYMD) {
+  var out = [], d = new Date(deYMD + 'T12:00:00-03:00'), fim = new Date(ateYMD + 'T12:00:00-03:00');
+  while (d <= fim && out.length < 400) { out.push(diaISO(d)); d = new Date(d.getTime() + 86400000); }
+  return out;
+}
+
+/* ---------- carregar e desenhar ---------- */
+async function carregar() {
+  if (!$('de').value || !$('ate').value) periodoPadrao();
+  if ($('de').value > $('ate').value) { var t = $('de').value; $('de').value = $('ate').value; $('ate').value = t; }
+  var lim = limitesPeriodo();
+  $('subtitulo').textContent = 'Carregando…';
+  try {
+    var dados = await Promise.all([
+      buscarTudo('lp_visits', 'created_at,path', lim.de.toISOString(), lim.ate.toISOString()),
+      buscarTudo('lp_leads', 'id,nome,whatsapp,origem,servico,segmento,created_at', lim.de.toISOString(), lim.ate.toISOString())
+    ]);
+    desenhar(dados[0], dados[1]);
+  } catch (e) {
+    console.error(e);
+    $('subtitulo').textContent = 'Não foi possível carregar os dados.';
+    linhaVazia($('t-conv'), 4, 'Nenhum dado encontrado');
+    linhaVazia($('t-leads'), 7, 'Nenhum lead encontrado');
+    if (e && (e.status === 401 || /JWT/i.test(e.message || ''))) sair();
+  }
+}
+
+function desenhar(visitas, leads) {
+  var nV = visitas.length, nL = leads.length;
+  $('subtitulo').textContent = fmtNum(nL) + (nL === 1 ? ' lead' : ' leads') + ' no período';
+  $('k-visitas').textContent = fmtNum(nV);
+  $('k-leads').textContent = fmtNum(nL);
+  $('k-conv').textContent = fmtPct(pct(nL, nV));
+  var hoje = diaISO(new Date());
+  $('k-hoje').textContent = fmtNum(leads.filter(function (l) { return diaISO(new Date(l.created_at)) === hoje; }).length);
+
+  /* gráfico diário */
+  var dias = diasEntre($('de').value, $('ate').value);
+  var mV = {}, mL = {};
+  visitas.forEach(function (v) { var d = diaISO(new Date(v.created_at)); mV[d] = (mV[d] || 0) + 1; });
+  leads.forEach(function (l) { var d = diaISO(new Date(l.created_at)); mL[d] = (mL[d] || 0) + 1; });
+  var sV = dias.map(function (d) { return mV[d] || 0; });
+  var sL = dias.map(function (d) { return mL[d] || 0; });
+  var sC = dias.map(function (d, i) { return +pct(sL[i], sV[i]).toFixed(1); });
+  desenharGrafico(dias.map(diaCurto), sV, sL, sC);
+
+  /* conversão por LP */
+  var porLP = {};
+  Object.keys(LPS).forEach(function (k) { porLP[k] = { v: 0, l: 0 }; });
+  visitas.forEach(function (v) { var k = v.path || '/'; porLP[k] = porLP[k] || { v: 0, l: 0 }; porLP[k].v++; });
+  leads.forEach(function (l) { var k = l.segmento || '/'; porLP[k] = porLP[k] || { v: 0, l: 0 }; porLP[k].l++; });
+  var tb = $('t-conv'); tb.innerHTML = '';
+  var chaves = Object.keys(porLP).filter(function (k) { return porLP[k].v || porLP[k].l; });
+  if (!chaves.length) { linhaVazia(tb, 4, 'Nenhum dado encontrado'); }
+  chaves.sort(function (a, b) { return porLP[b].v - porLP[a].v; }).forEach(function (k) {
+    var tr = el('tr');
+    tr.appendChild(el('td', null, LPS[k] || k));
+    tr.appendChild(el('td', { class: 'num' }, fmtNum(porLP[k].v)));
+    tr.appendChild(el('td', { class: 'num' }, fmtNum(porLP[k].l)));
+    tr.appendChild(el('td', { class: 'num' }, fmtPct(pct(porLP[k].l, porLP[k].v))));
+    tb.appendChild(tr);
+  });
+
+  /* tabela de leads */
+  var tl = $('t-leads'); tl.innerHTML = '';
+  $('info-leads').textContent = nL ? fmtNum(nL) + ' no período' : '';
+  if (!nL) { linhaVazia(tl, 7, 'Nenhum lead encontrado'); return; }
+  leads.forEach(function (l) {
+    var tr = el('tr');
+    tr.appendChild(el('td', null, l.nome || '—'));
+    tr.appendChild(el('td', null, fmtTel(l.whatsapp)));
+    var tdLp = el('td'); tdLp.appendChild(el('span', { class: 'tag' }, LPS[l.segmento] || l.segmento || '—')); tr.appendChild(tdLp);
+    tr.appendChild(el('td', null, INTERESSE[l.servico] || l.servico || '—'));
+    tr.appendChild(el('td', null, l.origem || '—'));
+    tr.appendChild(el('td', null, dataHora(l.created_at)));
+    var td = el('td');
+    var a = el('a', { class: 'wa', href: linkWhats(l.nome, l.whatsapp), target: '_blank', rel: 'noopener' });
+    a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.4 8.4 0 0 1-12.2 7.5L3.5 20.5l1.4-4.6A8.5 8.5 0 1 1 20.5 11.6z"/></svg>';
+    a.appendChild(document.createTextNode('WhatsApp'));
+    a.setAttribute('aria-label', 'Chamar ' + (l.nome || 'lead') + ' no WhatsApp');
+    td.appendChild(a); tr.appendChild(td);
+    tl.appendChild(tr);
+  });
+}
+
+function desenharGrafico(labels, sV, sL, sC) {
+  if (!window.Chart) return;
+  var cfg = {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Visitas', data: sV, borderColor: '#60A5FA', backgroundColor: '#60A5FA', yAxisID: 'y', tension: .3, pointRadius: 2, borderWidth: 2 },
+        { label: 'Cadastros', data: sL, borderColor: '#4ADE80', backgroundColor: '#4ADE80', yAxisID: 'y', tension: .3, pointRadius: 2, borderWidth: 2 },
+        { label: 'Conversão (%)', data: sC, borderColor: '#FBBF24', backgroundColor: '#FBBF24', yAxisID: 'y1', tension: .3, pointRadius: 2, borderWidth: 2, borderDash: [4, 4] }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0A0A0A', borderColor: '#333', borderWidth: 1, titleColor: '#FAFAFA', bodyColor: '#D4D4D4', padding: 10,
+          callbacks: { label: function (c) { return ' ' + c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? fmtPct(c.parsed.y) : fmtNum(c.parsed.y)); } }
+        }
+      },
+      scales: {
+        x: { grid: { color: '#1F1F1F' }, ticks: { color: '#737373', maxRotation: 0, autoSkip: true, maxTicksLimit: 10 } },
+        y: { beginAtZero: true, grid: { color: '#1F1F1F' }, ticks: { color: '#737373', precision: 0 } },
+        y1: { beginAtZero: true, position: 'right', grid: { display: false }, ticks: { color: '#737373', callback: function (v) { return v + '%'; } } }
+      }
+    }
+  };
+  if (grafico) grafico.destroy();
+  grafico = new Chart($('grafico'), cfg);
+}
+
+/* ---------- login / sessão ---------- */
+function mostrar(logado) {
+  $('tela-login').classList.toggle('hidden', logado);
+  $('tela-painel').classList.toggle('hidden', !logado);
+}
+async function sair() {
+  try { await sb.auth.signOut(); } catch (e) {}
+  mostrar(false);
+  $('senha').value = '';
+}
+
+$('form-login').addEventListener('submit', async function (ev) {
+  ev.preventDefault();
+  var u = $('usuario').value.trim().toLowerCase();
+  var email = USUARIOS[u] || (u.indexOf('@') > -1 ? u : null);
+  $('erro-login').textContent = '';
+  if (!email) { $('erro-login').textContent = 'Usuário ou senha inválidos.'; return; }
+  $('btn-entrar').disabled = true; $('btn-entrar').textContent = 'Entrando…';
+  var r = await sb.auth.signInWithPassword({ email: email, password: $('senha').value });
+  $('btn-entrar').disabled = false; $('btn-entrar').textContent = 'Entrar';
+  if (r.error) { $('erro-login').textContent = 'Usuário ou senha inválidos.'; return; }
+  mostrar(true); periodoPadrao(); carregar();
+});
+$('btn-sair').addEventListener('click', sair);
+$('de').addEventListener('change', carregar);
+$('ate').addEventListener('change', carregar);
+
+(async function iniciar() {
+  var r = await sb.auth.getSession();
+  if (r.data && r.data.session) { mostrar(true); periodoPadrao(); carregar(); }
+  else { mostrar(false); $('senha').focus(); }
+})();
+</script>
+</body>
+</html>
