@@ -110,7 +110,8 @@ p{margin:0 auto 28px;max-width:36ch;color:var(--muted);font-weight:300;font-size
 /* =========================================================
    CONFIGURAÇÃO — trocar antes de publicar
    ========================================================= */
-var WHATSAPP_NUMERO = '5563900000000'; // TROCAR: 55 + DDD 63 + número, só dígitos
+var WHATSAPP_NUMERO = '5563992369034'; // WhatsApp da Dra. Weylla (55 + DDD + número)
+var MENSAGEM_WA = 'Vim do Google e quero falar com um advogado especialista.';
 var ESPERA_SEGUNDOS = 3;
 
 var ASSUNTO = {
@@ -128,8 +129,9 @@ var ASSUNTO = {
   if (!ASSUNTO[servico]) servico = 'geral';
   var nome = (lead.nome || '').split(' ')[0];
 
-  var msg = 'Olá, Dra. Weylla! ' + (lead.nome ? 'Meu nome é ' + lead.nome + ', vim pelo site e ' : 'Vim pelo site e ') + ASSUNTO[servico];
-  var link = 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + encodeURIComponent(msg);
+  var msg = MENSAGEM_WA;
+  var numero = WHATSAPP_NUMERO;
+  var link = 'https://wa.me/' + numero + '?text=' + encodeURIComponent(msg);
   document.getElementById('abrir').href = link;
 
   if (nome) {

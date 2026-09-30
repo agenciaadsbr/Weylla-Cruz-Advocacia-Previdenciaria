@@ -897,7 +897,43 @@ if (HEROS[SERVICO]) {
 /* =========================================================
    CONFIGURAÇÃO
    ========================================================= */
+var WHATSAPP_NUMERO = '5563992369034';  // WhatsApp da Dra. Weylla (usado só se a página /redirect não estiver no ar)
+var MENSAGEM_WA = 'Vim do Google e quero falar com um advogado especialista.';
 var REDIRECT_URL = '/redirect';  // página de transição (3 s) que abre o WhatsApp
+var ASSUNTO_WA = {
+  geral:       'gostaria de uma orientação sobre um benefício do INSS.',
+  maternidade: 'quero saber se tenho direito ao salário-maternidade.',
+  bpc:         'quero saber sobre o BPC/LOAS.',
+  outros:      'tenho uma dúvida sobre aposentadoria ou outro benefício do INSS.'
+};
+/* rede de segurança: confere se a página /redirect existe no servidor.
+   Se não existir, a transição acontece aqui mesmo e a pessoa nunca cai num 404. */
+var REDIRECT_OK = null;
+(function checarRedirect() {
+  if (location.protocol === 'file:') { REDIRECT_OK = false; return; }
+  function testar(url) { return fetch(url, { method: 'HEAD', cache: 'no-store' }).then(function (r) { return r.ok; }, function () { return false; }); }
+  testar(REDIRECT_URL).then(function (ok) {
+    if (ok) { REDIRECT_OK = true; return; }
+    return testar('/redirect.html').then(function (ok2) {
+      if (ok2) { REDIRECT_URL = '/redirect.html'; REDIRECT_OK = true; } else { REDIRECT_OK = false; }
+    });
+  });
+})();
+function transicaoNaPagina(nome, servico) {
+  var msg = MENSAGEM_WA;
+  var link = 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + encodeURIComponent(msg);
+  try { if (window.fbq) fbq('track', 'Lead', { content_name: servico }); } catch (e) {}
+  var ov = document.createElement('div');
+  ov.setAttribute('role', 'status');
+  ov.style.cssText = 'position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;background:rgba(26,13,8,.97);color:#F5EDE5;font-family:Poppins,system-ui,sans-serif';
+  var box = document.createElement('div');
+  var h = document.createElement('div'); h.style.cssText = 'font-size:1.6rem;font-weight:600;margin-bottom:10px';
+  h.textContent = 'Tudo certo, ' + nome.split(' ')[0] + '! Abrindo o WhatsApp…';
+  var a = document.createElement('a'); a.href = link; a.className = 'btn'; a.style.marginTop = '18px';
+  a.textContent = 'Abrir o WhatsApp agora';
+  box.appendChild(h); box.appendChild(a); ov.appendChild(box); document.body.appendChild(ov);
+  setTimeout(function () { location.href = link; }, 3000);
+}
 var WEBHOOK_URL  = '';           // OPCIONAL: URL de webhook (CRM, n8n, Make, planilha) para receber nome e telefone
 
 (function () {
@@ -975,7 +1011,7 @@ var WEBHOOK_URL  = '';           // OPCIONAL: URL de webhook (CRM, n8n, Make, pl
     var servico = fServ.value || 'geral';
 
     /* nome e serviço seguem para a página /redirect (não vão na URL) */
-    try { sessionStorage.setItem('wc_lead', JSON.stringify({ nome: nome, servico: servico })); } catch (err) {}
+    try { sessionStorage.setItem('wc_lead', JSON.stringify({ nome: nome, servico: servico, numero: WHATSAPP_NUMERO })); } catch (err) {}
 
     if (WEBHOOK_URL) {
       try {
@@ -996,7 +1032,10 @@ var WEBHOOK_URL  = '';           // OPCIONAL: URL de webhook (CRM, n8n, Make, pl
     q.set('s', servico);
     var destino = REDIRECT_URL + '?' + q.toString();
     var foi = false;
-    function seguir() { if (!foi) { foi = true; location.href = destino; } }
+    function seguir() {
+      if (foi) return; foi = true;
+      if (REDIRECT_OK === false) transicaoNaPagina(nome, servico); else location.href = destino;
+    }
 
     /* grava o lead no Supabase (segmento = variação da LP; servico = interesse) */
     try {
